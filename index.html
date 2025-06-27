@@ -10,6 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+        
 
         body {
             font-family: 'Arial', sans-serif;
@@ -1112,7 +1113,7 @@ marquee img[style] {
                     e.preventDefault();
                     
                     // Message générique
-                    const message = `🍽️ Bonjour ! Je souhaite passer une commande depuis votre site web. Pouvez-vous me contacter ? Merci !`;
+                    const message = ` Bonjour 😊! Je souhaite passer une commande depuis votre site web. Pouvez-vous me contacter ? Merci !`;
                     
                     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(message)}`;
                     window.open(url, '_blank');
@@ -1154,5 +1155,36 @@ marquee img[style] {
         text-decoration: underline;
     }
 </style>
+<script>
+  // Quand on clique sur un produit
+  document.querySelectorAll('.produit').forEach(function(produit) {
+    produit.addEventListener('click', function(e) {
+      // Si déjà actif, on laisse passer (pour le bouton)
+      if (!produit.classList.contains('active')) {
+        e.preventDefault(); // empêche le clic de continuer (important)
+        produit.classList.add('active');
+
+        // Retirer l'effet sur les autres produits (optionnel)
+        document.querySelectorAll('.produit').forEach(function(other) {
+          if (other !== produit) {
+            other.classList.remove('active');
+          }
+        });
+      }
+    });
+  });
+
+  // Gestion spéciale pour le bouton "Commander"
+  document.querySelectorAll('.btn-commande').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      const parent = btn.closest('.produit');
+      if (!parent.classList.contains('active')) {
+        e.preventDefault(); // empêche WhatsApp de s’ouvrir si l'effet n’est pas activé
+      }
+      // sinon, tout va bien
+    });
+  });
+</script>
+
 
 </html>
