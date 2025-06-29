@@ -1156,35 +1156,35 @@ marquee img[style] {
     }
 </style>
 <script>
-  // Quand on clique sur un produit
+  // Ajoute le comportement de "hover au clic"
   document.querySelectorAll('.produit').forEach(function(produit) {
     produit.addEventListener('click', function(e) {
-      // Si déjà actif, on laisse passer (pour le bouton)
+      // Si déjà actif, on laisse faire (clic sur bouton "Commander")
       if (!produit.classList.contains('active')) {
-        e.preventDefault(); // empêche le clic de continuer (important)
+        e.preventDefault(); // empêche d'activer les liens tout de suite
         produit.classList.add('active');
 
-        // Retirer l'effet sur les autres produits (optionnel)
-        document.querySelectorAll('.produit').forEach(function(other) {
-          if (other !== produit) {
-            other.classList.remove('active');
+        // Optionnel : retire l'effet des autres produits
+        document.querySelectorAll('.produit').forEach(function(autre) {
+          if (autre !== produit) {
+            autre.classList.remove('active');
           }
         });
       }
     });
   });
 
-  // Gestion spéciale pour le bouton "Commander"
+  // Autoriser le bouton "Commander" uniquement après activation
   document.querySelectorAll('.btn-commande').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       const parent = btn.closest('.produit');
       if (!parent.classList.contains('active')) {
-        e.preventDefault(); // empêche WhatsApp de s’ouvrir si l'effet n’est pas activé
+        e.preventDefault(); // bloque le lien vers WhatsApp si pas activé
       }
-      // sinon, tout va bien
     });
   });
 </script>
+
 
 
 </html>
