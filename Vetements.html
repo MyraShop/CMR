@@ -108,10 +108,132 @@
 </head>
 <body>
 
-  <div class="intro">
-    <h1 class="welcome">Ici ce sont les vetements !</h1>
-    <p>Bon shopping 🔥</p>
-  </div>
+ <div class="shipping-banner">
+    <div class="banner-content">
+        <div class="banner-info">
+            <div class="info-item">
+                <span class="emoji">🇨🇳</span>
+                <div class="text">
+                    <div class="label">Expédié depuis</div>
+                    <div class="value">Chine</div>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <span class="emoji">✈️</span>
+                <div class="text">
+                    <div class="label">Livraison au Cameroun</div>
+                    <div class="value">15 Jours</div>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <span class="emoji">🚚</span>
+                <div class="text">
+                    <div class="label">Livraison</div>
+                    <div class="value">Gratuite</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <style>
+    .shipping-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.shipping-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+    animation: float 20s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateX(-50px) translateY(-50px); }
+    100% { transform: translateX(50px) translateY(50px); }
+}
+
+.banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.banner-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    background: rgba(255,255,255,0.1);
+    padding: 12px 20px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-2px);
+}
+
+.info-item .emoji {
+    font-size: 24px;
+}
+
+.info-item .text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.info-item .label {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-bottom: 2px;
+}
+
+.info-item .value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .banner-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .info-item {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    .info-item .value {
+        font-size: 14px;
+    }
+}
+  </style>
 
   <!-- Navigation Buttons -->
    <!--
