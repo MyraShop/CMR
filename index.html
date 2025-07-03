@@ -452,23 +452,32 @@ marquee img[style] {
 </div>
 
 <style>
-/* SIMPLE Solution: CSS only to show price on mobile */
+/* SOLUTION pour votre structure HTML exacte */
 
-/* On mobile, automatically show prices and buttons */
+/* Sur mobile, afficher automatiquement l'overlay avec le prix et bouton */
 @media (max-width: 768px) {
-    /* Common product classes */
-    .product .price,
-    .product .order-btn,
-    .product-item .price,
-    .product-item .order-btn,
-    .card .price,
-    .card .order-btn,
-    .item .price,
-    .item .order-btn,
-    .product-card .price,
-    .product-card .order-btn,
-    .menu-item .price,
-    .menu-item .order-btn {
+    .product-card .product-info-overlay {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        display: block !important;
+    }
+    
+    .product-card .product-price {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        display: block !important;
+    }
+    
+    .product-card .add-to-cart-btn {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        display: block !important;
+    }
+    
+    .product-card .product-badge {
         opacity: 1 !important;
         visibility: visible !important;
         transform: translateY(0) !important;
@@ -476,31 +485,16 @@ marquee img[style] {
     }
 }
 
-/* Alternative: Keep hover on desktop, show on mobile */
+/* Alternative: Si vous voulez garder le hover sur desktop */
 @media (max-width: 768px) {
-    .product:hover .price,
-    .product .price,
-    .product-item:hover .price,
-    .product-item .price,
-    .card:hover .price,
-    .card .price {
+    .product-card:hover .product-info-overlay,
+    .product-card .product-info-overlay {
         opacity: 1 !important;
         visibility: visible !important;
         transform: translateY(0) !important;
+        display: flex !important; /* ou block selon votre CSS */
     }
-    
-    .product:hover .order-btn,
-    .product .order-btn,
-    .product-item:hover .order-btn,
-    .product-item .order-btn,
-    .card:hover .order-btn,
-    .card .order-btn {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateY(0) !important;
-    }
-}
-    
+}  
 /* Hero Section: Style Unique Enhanced */
 .hero-video {
     height: 65vh;
@@ -860,7 +854,7 @@ marquee img[style] {
 
         <!-- Professional Navigation Buttons -->
         <div class="nav-buttons">
-            <button class="nav-btn">👱‍♀️ Perruquesss</button>
+            <button class="nav-btn">👱‍♀️ Perruques</button>
             <button class="nav-btn">👠 Chaussures</button>
             <button class="nav-btn">📱 Accessoires</button>
             <form action="Vetements.html"> <button class="nav-btn">👗Vetements</button></form>
