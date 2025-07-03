@@ -1165,6 +1165,141 @@ marquee img[style] {
         text-decoration: underline;
     }
 </style>
+<script>
+    // SOLUTION : Ajouter prix et bouton en bas sur mobile SEULEMENT
+// PC reste inchangé, mobile a les éléments dupliqués en bas
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier si on est sur mobile
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+    
+    function addMobileElements() {
+        if (!isMobile()) return;
+        
+        // Sélectionner toutes les cartes produit
+        const productCards = document.querySelectorAll('.product-card');
+        
+        productCards.forEach(card => {
+            // Vérifier si on a déjà ajouté les éléments mobiles
+            if (card.querySelector('.mobile-price-section')) return;
+            
+            // Récupérer les données depuis l'overlay
+            const priceElement = card.querySelector('.product-price');
+            const badgeElement = card.querySelector('.product-badge');
+            const btnElement = card.querySelector('.add-to-cart-btn');
+            const quickInfo = card.querySelector('.product-quick-info');
+            
+            if (priceElement && btnElement && quickInfo) {
+                // Créer la section mobile
+                const mobileSection = document.createElement('div');
+                mobileSection.className = 'mobile-price-section';
+                mobileSection.style.cssText = `
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 8px;
+                    padding: 8px 0;
+                    border-top: 1px solid #eee;
+                `;
+                
+                // Créer le conteneur prix
+                const priceContainer = document.createElement('div');
+                priceContainer.className = 'mobile-price-container';
+                
+                // Copier le prix barré si il existe
+                if (badgeElement) {
+                    const mobileBadge = document.createElement('div');
+                    mobileBadge.textContent = badgeElement.textContent;
+                    mobileBadge.style.cssText = `
+                        font-size: 12px;
+                        color: #999;
+                        text-decoration: line-through;
+                    `;
+                    priceContainer.appendChild(mobileBadge);
+                }
+                
+                // Copier le prix principal
+                const mobilePrice = document.createElement('div');
+                mobilePrice.textContent = priceElement.textContent;
+                mobilePrice.style.cssText = `
+                    font-weight: bold;
+                    color: #333;
+                    font-size: 16px;
+                `;
+                priceContainer.appendChild(mobilePrice);
+                
+                // Créer le bouton mobile
+                const mobileBtn = document.createElement('button');
+                mobileBtn.textContent = 'Commander';
+                mobileBtn.className = 'mobile-order-btn';
+                mobileBtn.style.cssText = `
+                    background: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 8px 16px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: background 0.3s;
+                `;
+                
+                // Copier l'événement click du bouton original
+                mobileBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Déclencher le click sur le bouton original
+                    btnElement.click();
+                });
+                
+                // Ajouter hover effect
+                mobileBtn.addEventListener('mouseenter', function() {
+                    this.style.background = '#0056b3';
+                });
+                mobileBtn.addEventListener('mouseleave', function() {
+                    this.style.background = '#007bff';
+                });
+                
+                // Assembler la section mobile
+                mobileSection.appendChild(priceContainer);
+                mobileSection.appendChild(mobileBtn);
+                
+                // Ajouter à la fin de product-quick-info
+                quickInfo.appendChild(mobileSection);
+            }
+        });
+    }
+    
+    // Supprimer les éléments mobiles quand on passe sur desktop
+    function removeMobileElements() {
+        const mobileSections = document.querySelectorAll('.mobile-price-section');
+        mobileSections.forEach(section => section.remove());
+    }
+    
+    // Exécuter au chargement
+    addMobileElements();
+    
+    // Exécuter au redimensionnement
+    window.addEventListener('resize', function() {
+        if (isMobile()) {
+            addMobileElements();
+        } else {
+            removeMobileElements();
+        }
+    });
+    
+    // Ajouter CSS pour réduire l'opacité de l'overlay sur mobile
+    const style = document.createElement('style');
+    style.textContent = `
+        @media (max-width: 768px) {
+            .product-card .product-info-overlay {
+                opacity: 0.1 !important;
+                pointer-events: none !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+});
+</script>
   
 </html>
