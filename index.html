@@ -452,39 +452,81 @@ marquee img[style] {
 </div>
 
 <style>
-/* SOLUTION pour votre structure HTML exacte */
+/* SOLUTION OPTIMISÉE MOBILE : Repositionner prix et bouton en bas */
 
-/* Sur mobile, afficher automatiquement l'overlay avec le prix et bouton */
 @media (max-width: 768px) {
+    /* DÉSACTIVER le hover sur mobile */
+    .product-card:hover .product-info-overlay,
     .product-card .product-info-overlay {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateY(0) !important;
-        display: block !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
     }
     
+    /* REPOSITIONNER les éléments en bas dans product-quick-info */
+    .product-card .product-quick-info {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    /* Créer une ligne pour prix + bouton côte à côte */
+    .product-card .product-quick-info::after {
+        content: '' !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-top: 8px !important;
+    }
+    
+    /* DÉPLACER le prix depuis l'overlay vers le bas */
     .product-card .product-price {
+        position: static !important;
         opacity: 1 !important;
         visibility: visible !important;
-        transform: translateY(0) !important;
-        display: block !important;
+        transform: none !important;
+        order: 3 !important;
+        margin: 0 !important;
+        font-weight: bold !important;
+        color: #333 !important;
     }
     
+    /* DÉPLACER le bouton depuis l'overlay vers le bas */
     .product-card .add-to-cart-btn {
+        position: static !important;
         opacity: 1 !important;
         visibility: visible !important;
-        transform: translateY(0) !important;
-        display: block !important;
+        transform: none !important;
+        order: 4 !important;
+        margin: 0 !important;
+        padding: 8px 16px !important;
+        font-size: 14px !important;
+        border-radius: 4px !important;
     }
     
+    /* DÉPLACER aussi le badge (prix barré) si nécessaire */
     .product-card .product-badge {
+        position: static !important;
         opacity: 1 !important;
         visibility: visible !important;
-        transform: translateY(0) !important;
-        display: block !important;
+        transform: none !important;
+        order: 2 !important;
+        margin: 0 !important;
+        font-size: 12px !important;
+        color: #999 !important;
+    }
+    
+    /* Mise en page côte à côte pour prix + bouton */
+    .product-card .product-quick-info {
+        position: relative !important;
+    }
+    
+    .product-card .product-quick-info .product-price,
+    .product-card .product-quick-info .add-to-cart-btn {
+        display: inline-block !important;
+        vertical-align: middle !important;
     }
 }
-
 /* Alternative: Si vous voulez garder le hover sur desktop */
 @media (max-width: 768px) {
     .product-card:hover .product-info-overlay,
