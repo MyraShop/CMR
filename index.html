@@ -8,7 +8,7 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box; 
         }
         
 
@@ -1156,35 +1156,107 @@ marquee img[style] {
     }
 </style>
 <script>
-  // Ajoute le comportement de "hover au clic"
-  document.querySelectorAll('.produit').forEach(function(produit) {
-    produit.addEventListener('click', function(e) {
-      // Si déjà actif, on laisse faire (clic sur bouton "Commander")
-      if (!produit.classList.contains('active')) {
-        e.preventDefault(); // empêche d'activer les liens tout de suite
-        produit.classList.add('active');
+    // Script pour gérer le hover sur mobile et desktop
+document.addEventListener('DOMContentLoaded', function() {
+    const products = document.querySelectorAll('.product');
+    
+    products.forEach(product => {
+        let isInfoVisible = false;
+        const info = product.querySelector('.info');
+        const commandButton = product.querySelector('.command-btn'); // Assure-toi que ton bouton a cette classe
+        
+        // Fonction pour afficher les infos
+        function showInfo() {
+            if (!isInfoVisible) {
+                info.style.transform = 'translateY(0)';
+                isInfoVisible = true;
+            }
+        }
+        
+        // Fonction pour cacher les infos
+        function hideInfo() {
+            info.style.transform = 'translateY(100%)';
+            isInfoVisible = false;
+        }
+        
+        // Détection si c'est un appareil tactile
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        if (isTouchDevice) {
+            // Sur mobile/tablette
+            product.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // Empêche le comportement par défaut
+                
+                if (!isInfoVisible) {
+                    // Premier clic : afficher les infos
+                    showInfo();
+                } else {
+                    // Deuxième clic : permettre l'action du bouton
+                    // Ne rien faire ici, laisser le clic se propager
+                }
+            });
+            
+            // Gérer le clic sur le bouton commander
+            if (commandButton) {
+                commandButton.addEventListener('click', function(e) {
+                    if (!isInfoVisible) {
+                        // Si les infos ne sont pas visibles, les afficher d'abord
+                        e.preventDefault();
+                        showInfo();
+                    } else {
+                        // Si les infos sont visibles, permettre l'action du bouton
+                        // Le bouton fonctionnera normalement
+                        console.log('Bouton commander cliqué pour:', product.querySelector('h3').textContent);
+                    }
+                });
+            }
+            
+            // Cacher les infos quand on clique ailleurs
+            document.addEventListener('touchstart', function(e) {
+                if (!product.contains(e.target)) {
+                    hideInfo();
+                }
+            });
+            
+        } else {
+            // Sur desktop : hover normal
+            product.addEventListener('mouseenter', showInfo);
+            product.addEventListener('mouseleave', hideInfo);
+        }
+    });
+});
 
-        // Optionnel : retire l'effet des autres produits
-        document.querySelectorAll('.produit').forEach(function(autre) {
-          if (autre !== produit) {
-            autre.classList.remove('active');
-          }
+// Alternative plus simple si tu veux juste empêcher le clic direct
+function preventDirectClick() {
+    const products = document.querySelectorAll('.product');
+    
+    products.forEach(product => {
+        let clickCount = 0;
+        
+        product.addEventListener('click', function(e) {
+            const isTouchDevice = 'ontouchstart' in window;
+            
+            if (isTouchDevice) {
+                clickCount++;
+                
+                if (clickCount === 1) {
+                    // Premier clic : afficher les infos
+                    e.preventDefault();
+                    product.classList.add('show-info');
+                    
+                    // Reset après 3 secondes
+                    setTimeout(() => {
+                        clickCount = 0;
+                        product.classList.remove('show-info');
+                    }, 3000);
+                }
+                // Deuxième clic : laisser l'action se faire
+            }
         });
-      }
     });
-  });
+}
 
-  // Autoriser le bouton "Commander" uniquement après activation
-  document.querySelectorAll('.btn-commande').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      const parent = btn.closest('.produit');
-      if (!parent.classList.contains('active')) {
-        e.preventDefault(); // bloque le lien vers WhatsApp si pas activé
-      }
-    });
-  });
+// Appeler la fonction alternative
+// preventDirectClick();
 </script>
-
-
-
 </html>
