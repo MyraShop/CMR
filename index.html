@@ -1301,5 +1301,82 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
 });
 </script>
-  
+  <script> //dernier pour tous rectifier e function de claude
+    // SOLUTION FINALE : Garder hover + réduire opacité + supprimer script mobile
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. SUPPRIMER tous les éléments mobiles ajoutés par l'ancien script
+    function removeAllMobileElements() {
+        const mobileSections = document.querySelectorAll('.mobile-price-section');
+        mobileSections.forEach(section => section.remove());
+        
+        const mobileBtns = document.querySelectorAll('.mobile-order-btn');
+        mobileBtns.forEach(btn => btn.remove());
+        
+        const mobileContainers = document.querySelectorAll('.mobile-price-container');
+        mobileContainers.forEach(container => container.remove());
+    }
+    
+    // Supprimer maintenant et surveiller
+    removeAllMobileElements();
+    
+    // 2. AJOUTER CSS pour réduire l'opacité + hover par défaut sur mobile
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Réduire l'opacité de l'overlay pour mieux voir l'image */
+        .product-card .product-info-overlay {
+            background: rgba(0, 0, 0, 0.3) !important; /* Au lieu de rgba(0, 0, 0, 0.8) par exemple */
+            opacity: 0.85 !important; /* Réduire l'opacité générale */
+        }
+        
+        /* Garder le texte bien visible malgré l'opacité réduite */
+        .product-card .product-info-overlay .product-price,
+        .product-card .product-info-overlay .product-badge,
+        .product-card .product-info-overlay .add-to-cart-btn {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7) !important;
+        }
+        
+        /* DESKTOP : Hover normal (uniquement au survol) */
+        @media (min-width: 769px) {
+            .product-card:hover .product-info-overlay {
+                opacity: 0.85 !important;
+                visibility: visible !important;
+            }
+        }
+        
+        /* MOBILE : Hover activé par défaut (toujours visible) */
+        @media (max-width: 768px) {
+            .product-card .product-info-overlay {
+                opacity: 0.85 !important;
+                visibility: visible !important;
+                transform: translateY(0) !important;
+                display: flex !important;
+            }
+        }
+        
+        /* Cacher définitivement les éléments mobiles ajoutés */
+        .mobile-price-section,
+        .mobile-order-btn,
+        .mobile-price-container {
+            display: none !important;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // 3. SURVEILLER et supprimer en continu si l'ancien script essaie de revenir
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                removeAllMobileElements();
+            }
+        });
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+});
+
+// 4. EMPÊCHER l'ancien script de se relancer
+window.addMobileElements = function() { return; };
+window.isMobile = function() { return false; };
+  </script>
 </html>
