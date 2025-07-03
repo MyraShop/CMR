@@ -7,8 +7,10 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f7f7f7;
+      padding: 0;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
     }
 
     .intro {
@@ -65,18 +67,116 @@
       100% { transform: translateX(-100%); }
     }
 
+    /* Shipping Banner Styles */
+    .shipping-banner {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .shipping-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      animation: float 20s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateX(-50px) translateY(-50px); }
+      100% { transform: translateX(50px) translateY(50px); }
+    }
+
+    .banner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .banner-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      background: rgba(255,255,255,0.2);
+      padding: 12px 20px;
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+
+    .info-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .info-item .emoji {
+      font-size: 24px;
+    }
+
+    .info-item .text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .info-item .label {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-bottom: 2px;
+    }
+
+    .info-item .value {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* Spacer between banner and products */
+    .spacer {
+      height: 40px;
+    }
+
+    /* Product Grid Container */
+    .products-container {
+      padding: 20px;
+    }
+
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .product {
       position: relative;
       overflow: hidden;
       border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       background: #fff;
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
     }
 
     .product img {
@@ -104,226 +204,192 @@
     .product:hover .info {
       transform: translateY(0);
     }
+
+    /* Footer WhatsApp */
+    .whatsapp-footer {
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+    }
+
+    .whatsapp-footer h3 {
+      margin-bottom: 15px;
+      color: #25d366;
+      font-size: 24px;
+    }
+
+    .whatsapp-footer p {
+      margin-bottom: 20px;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .whatsapp-btn {
+      display: inline-block;
+      background: linear-gradient(45deg, #25d366, #128c7e);
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+
+    .whatsapp-btn::before {
+      content: "📱 ";
+      margin-right: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner-info {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .info-item {
+        font-size: 14px;
+        padding: 10px 16px;
+      }
+
+      .info-item .value {
+        font-size: 14px;
+      }
+
+      .products-container {
+        padding: 15px;
+      }
+
+      .whatsapp-footer h3 {
+        font-size: 20px;
+      }
+
+      .whatsapp-footer p {
+        font-size: 14px;
+      }
+
+      .whatsapp-btn {
+        padding: 12px 24px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
 
- <div class="shipping-banner">
+  <!-- Shipping Banner -->
+  <div class="shipping-banner">
     <div class="banner-content">
-        <div class="banner-info">
-            <div class="info-item">
-                <span class="emoji">🇨🇳</span>
-                <div class="text">
-                    <div class="label">Expédié depuis</div>
-                    <div class="value">Chine</div>
-                </div>
-            </div>
-            
-            <div class="info-item">
-                <span class="emoji">✈️</span>
-                <div class="text">
-                    <div class="label">Livraison au Cameroun</div>
-                    <div class="value">15 Jours</div>
-                </div>
-            </div>
-            
-            <div class="info-item">
-                <span class="emoji">🚚</span>
-                <div class="text">
-                    <div class="label">Livraison</div>
-                    <div class="value">Gratuite</div>
-                </div>
-            </div>
+      <div class="banner-info">
+        <div class="info-item">
+          <span class="emoji">🇨🇳</span>
+          <div class="text">
+            <div class="label">Expédié depuis</div>
+            <div class="value">Chine</div>
+          </div>
         </div>
-    </div>
-</div>
-  <style>
-    .shipping-banner {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.shipping-banner::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
-    animation: float 20s linear infinite;
-}
-
-@keyframes float {
-    0% { transform: translateX(-50px) translateY(-50px); }
-    100% { transform: translateX(50px) translateY(50px); }
-}
-
-.banner-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
-    z-index: 1;
-}
-
-.banner-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.info-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 16px;
-    font-weight: 500;
-    background: rgba(255,255,255,0.1);
-    padding: 12px 20px;
-    border-radius: 25px;
-    backdrop-filter: blur(10px);
-    transition: transform 0.3s ease;
-}
-
-.info-item:hover {
-    transform: translateY(-2px);
-}
-
-.info-item .emoji {
-    font-size: 24px;
-}
-
-.info-item .text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.info-item .label {
-    font-size: 12px;
-    opacity: 0.8;
-    margin-bottom: 2px;
-}
-
-.info-item .value {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .banner-info {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .info-item {
-        font-size: 14px;
-        padding: 10px 16px;
-    }
-
-    .info-item .value {
-        font-size: 14px;
-    }
-}
-  </style>
-
-  <!-- Navigation Buttons -->
-   <!--
- <div class="nav-buttons">
-  <a href="men.html" class="nav-btn-tile">
-    <img src="beautiful-keratin-treated-hair.jpg" alt="Perruque">
-    <span>Perruque</span>
-  </a>
-  <a href="women.html" class="nav-btn-tile">
-    <img src="chaussures.png" alt="Chaussures">
-    <span>Chaussures</span>
-  </a>
-  <a href="electronics.html" class="nav-btn-tile">
-    <img src="pochette.png" alt="Accessoires">
-    <span>Accessoires</span>
-  </a>
-</div>
--->
-  
-  
-
-  <!-- Full-width Marquee Section -->
-  <!--<div class="marquee-container">
-    <div class="marquee">
-      <img src="IMG-6.jpg" alt="Banner 1">
-      <img src="IMG-7.jpg" alt="Banner 2">
-      <img src="IMG-20250520-WA0038.jpg" alt="Banner 3">
-    </div>
-  </div>  -->
-
-  <!-- Product Grid -->
-  <div class="product-grid">
-    <div class="product">
-      <img src="Images/vete.jpeg" alt="Product 1">
-      <div class="info">
-        <h3>Produit 1</h3>
-        <p>3.000 frs</p>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Images/vete2.jpeg" alt="Product 2">
-      <div class="info">
-        <h3>Produit 2</h3>
-        <p>frs</p>
-      </div>
-    </div>
-    <div class="product">
-        <img src="Images/vetement.png" alt="Product 3">
-      <div class="info">
-        <h3>Produit 3</h3>
-        <p>frs</p>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Images/v4.jpeg" alt="Product 4">
-      <div class="info">
-        <h3>Produit 4</h3>
-        <p>frs</p>
-      </div>
-    </div>
-    
-    <div class="product">
-      <img src="Images/v5.jpeg" alt="Product 5">
-      <div class="info">
-        <h3>Produit 5</h3>
-        <p>frs</p>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Images/v8.jpeg" alt="Product 1">
-      <div class="info">
-        <h3>Produit 6</h3>
-        <p>3.000 frs</p>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Images/WhatsApp Image 2025-06-15 at 20.29.23 (7).jpeg" alt="Product 1">
-      <div class="info">
-        <h3>Produit 7</h3>
-        <p>3.000 frs</p>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Images/WhatsApp Image 2025-06-15 at 20.29.23 (13).jpeg" alt="Product 1">
-      <div class="info">
-        <h3>Produit 8</h3>
-        <p>3.000 frs</p>
+        
+        <div class="info-item">
+          <span class="emoji">✈️</span>
+          <div class="text">
+            <div class="label">Livraison au Cameroun</div>
+            <div class="value">15 Jours</div>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <span class="emoji">🚚</span>
+          <div class="text">
+            <div class="label">Livraison</div>
+            <div class="value">Gratuite</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Spacer -->
+  <div class="spacer"></div>
+
+  <!-- Products Container -->
+  <div class="products-container">
+    <!-- Product Grid -->
+    <div class="product-grid">
+      <div class="product">
+        <img src="Images/vete.jpeg" alt="Product 1">
+        <div class="info">
+          <h3>Produit 1</h3>
+          <p>3.000 frs</p>
+        </div>
+      </div>
+      <div class="product">
+        <img src="Images/vete2.jpeg" alt="Product 2">
+        <div class="info">
+          <h3>Produit 2</h3>
+          <p>frs</p>
+        </div>
+      </div>
+      <div class="product">
+        <img src="Images/vetement.png" alt="Product 3">
+        <div class="info">
+          <h3>Produit 3</h3>
+          <p>frs</p>
+        </div>
+      </div>
+      <div class="product">
+        <img src="Images/v4.jpeg" alt="Product 4">
+        <div class="info">
+          <h3>Produit 4</h3>
+          <p>frs</p>
+        </div>
+      </div>
+      
+      <div class="product">
+        <img src="Images/v5.jpeg" alt="Product 5">
+        <div class="info">
+          <h3>Produit 5</h3>
+          <p>frs</p>
+        </div>
+      </div>
+      <div class="product">
+        <img src="Images/v8.jpeg" alt="Product 1">
+        <div class="info">
+          <h3>Produit 6</h3>
+          <p>3.000 frs</p>
+        </div>
+      </div>
+      <div class="product">
+        <img src="Images/WhatsApp Image 2025-06-15 at 20.29.23 (7).jpeg" alt="Product 1">
+        <div class="info">
+          <h3>Produit 7</h3>
+          <p>3.000 frs</p>
+        </div>
+      </div>
+      <div class="product">
+        <img src="Images/WhatsApp Image 2025-06-15 at 20.29.23 (13).jpeg" alt="Product 1">
+        <div class="info">
+          <h3>Produit 8</h3>
+          <p>3.000 frs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Footer -->
+  <footer class="whatsapp-footer">
+    <h3>Rejoignez notre groupe WhatsApp</h3>
+    <p>Suivez-nous pour plus de produits, offres spéciales et nouveautés !</p>
+    <a href="#" class="whatsapp-btn">Rejoindre le groupe</a>
+  </footer>
 
 </body>
 </html>
