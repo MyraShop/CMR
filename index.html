@@ -452,17 +452,23 @@ marquee img[style] {
 </div>
 
 <style>
-    /* Solution SIMPLE : CSS seulement pour afficher prix sur mobile */
+/* SIMPLE Solution: CSS only to show price on mobile */
 
-/* Sur mobile, afficher automatiquement les prix et boutons */
+/* On mobile, automatically show prices and buttons */
 @media (max-width: 768px) {
-    /* Remplacez ces sélecteurs par vos vraies classes */
-    .produit .prix,
-    .produit .btn-commander,
-    .product-item .prix,
-    .product-item .btn-commander,
-    .card .prix,
-    .card .btn-commander {
+    /* Common product classes */
+    .product .price,
+    .product .order-btn,
+    .product-item .price,
+    .product-item .order-btn,
+    .card .price,
+    .card .order-btn,
+    .item .price,
+    .item .order-btn,
+    .product-card .price,
+    .product-card .order-btn,
+    .menu-item .price,
+    .menu-item .order-btn {
         opacity: 1 !important;
         visibility: visible !important;
         transform: translateY(0) !important;
@@ -470,17 +476,25 @@ marquee img[style] {
     }
 }
 
-/* Alternative si vous préférez garder le hover sur desktop intact */
+/* Alternative: Keep hover on desktop, show on mobile */
 @media (max-width: 768px) {
-    .votre-classe-produit:hover .prix,
-    .votre-classe-produit .prix {
+    .product:hover .price,
+    .product .price,
+    .product-item:hover .price,
+    .product-item .price,
+    .card:hover .price,
+    .card .price {
         opacity: 1 !important;
         visibility: visible !important;
         transform: translateY(0) !important;
     }
     
-    .votre-classe-produit:hover .btn-commander,
-    .votre-classe-produit .btn-commander {
+    .product:hover .order-btn,
+    .product .order-btn,
+    .product-item:hover .order-btn,
+    .product-item .order-btn,
+    .card:hover .order-btn,
+    .card .order-btn {
         opacity: 1 !important;
         visibility: visible !important;
         transform: translateY(0) !important;
@@ -846,7 +860,7 @@ marquee img[style] {
 
         <!-- Professional Navigation Buttons -->
         <div class="nav-buttons">
-            <button class="nav-btn">👱‍♀️ Perruques</button>
+            <button class="nav-btn">👱‍♀️ Perruquesss</button>
             <button class="nav-btn">👠 Chaussures</button>
             <button class="nav-btn">📱 Accessoires</button>
             <form action="Vetements.html"> <button class="nav-btn">👗Vetements</button></form>
