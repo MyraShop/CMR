@@ -8,7 +8,7 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box; 
+            box-sizing: border-box;  
         }
         
 
@@ -452,6 +452,40 @@ marquee img[style] {
 </div>
 
 <style>
+    /* Solution SIMPLE : CSS seulement pour afficher prix sur mobile */
+
+/* Sur mobile, afficher automatiquement les prix et boutons */
+@media (max-width: 768px) {
+    /* Remplacez ces sélecteurs par vos vraies classes */
+    .produit .prix,
+    .produit .btn-commander,
+    .product-item .prix,
+    .product-item .btn-commander,
+    .card .prix,
+    .card .btn-commander {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        display: block !important;
+    }
+}
+
+/* Alternative si vous préférez garder le hover sur desktop intact */
+@media (max-width: 768px) {
+    .votre-classe-produit:hover .prix,
+    .votre-classe-produit .prix {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+    
+    .votre-classe-produit:hover .btn-commander,
+    .votre-classe-produit .btn-commander {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+}
     
 /* Hero Section: Style Unique Enhanced */
 .hero-video {
@@ -812,7 +846,7 @@ marquee img[style] {
 
         <!-- Professional Navigation Buttons -->
         <div class="nav-buttons">
-            <button class="nav-btn">👱‍♀️ Perruque</button>
+            <button class="nav-btn">👱‍♀️ Perruques</button>
             <button class="nav-btn">👠 Chaussures</button>
             <button class="nav-btn">📱 Accessoires</button>
             <form action="Vetements.html"> <button class="nav-btn">👗Vetements</button></form>
@@ -1155,196 +1189,6 @@ marquee img[style] {
         text-decoration: underline;
     }
 </style>
-<script>
-    // Script pour gérer le hover sur mobile et desktop
-document.addEventListener('DOMContentLoaded', function() {
-    const products = document.querySelectorAll('.product');
-    
-    products.forEach(product => {
-        let isInfoVisible = false;
-        const info = product.querySelector('.info');
-        const commandButton = product.querySelector('.command-btn'); // Assure-toi que ton bouton a cette classe
-        
-        // Fonction pour afficher les infos
-        function showInfo() {
-            if (!isInfoVisible) {
-                info.style.transform = 'translateY(0)';
-                isInfoVisible = true;
-            }
-        }
-        
-        // Fonction pour cacher les infos
-        function hideInfo() {
-            info.style.transform = 'translateY(100%)';
-            isInfoVisible = false;
-        }
-        
-        // Détection si c'est un appareil tactile
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        
-        if (isTouchDevice) {
-            // Sur mobile/tablette
-            product.addEventListener('touchstart', function(e) {
-                e.preventDefault(); // Empêche le comportement par défaut
-                
-                if (!isInfoVisible) {
-                    // Premier clic : afficher les infos
-                    showInfo();
-                } else {
-                    // Deuxième clic : permettre l'action du bouton
-                    // Ne rien faire ici, laisser le clic se propager
-                }
-            });
-            
-            // Gérer le clic sur le bouton commander
-            if (commandButton) {
-                commandButton.addEventListener('click', function(e) {
-                    if (!isInfoVisible) {
-                        // Si les infos ne sont pas visibles, les afficher d'abord
-                        e.preventDefault();
-                        showInfo();
-                    } else {
-                        // Si les infos sont visibles, permettre l'action du bouton
-                        // Le bouton fonctionnera normalement
-                        console.log('Bouton commander cliqué pour:', product.querySelector('h3').textContent);
-                    }
-                });
-            }
-            
-            // Cacher les infos quand on clique ailleurs
-            document.addEventListener('touchstart', function(e) {
-                if (!product.contains(e.target)) {
-                    hideInfo();
-                }
-            });
-            
-        } else {
-            // Sur desktop : hover normal
-            product.addEventListener('mouseenter', showInfo);
-            product.addEventListener('mouseleave', hideInfo);
-        }
-    });
-});
 
-// Alternative plus simple si tu veux juste empêcher le clic direct
-function preventDirectClick() {
-    const products = document.querySelectorAll('.product');
-    
-    products.forEach(product => {
-        let clickCount = 0;
-        
-        product.addEventListener('click', function(e) {
-            const isTouchDevice = 'ontouchstart' in window;
-            
-            if (isTouchDevice) {
-                clickCount++;
-                
-                if (clickCount === 1) {
-                    // Premier clic : afficher les infos
-                    e.preventDefault();
-                    product.classList.add('show-info');
-                    
-                    // Reset après 3 secondes
-                    setTimeout(() => {
-                        clickCount = 0;
-                        product.classList.remove('show-info');
-                    }, 3000);
-                }
-                // Deuxième clic : laisser l'action se faire
-            }
-        });
-    });
-}
-
-// Appeler la fonction alternative
-// preventDirectClick();
-</script>
-    <style>
-        /* CSS pour gérer le hover sur mobile */
-.product {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    background: #fff;
-    cursor: pointer; /* Indique que c'est cliquable */
-}
-
-.product img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.info {
-    position: absolute;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    width: 100%;
-    padding: 10px;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-    z-index: 10;
-}
-
-/* Hover pour desktop */
-@media (hover: hover) {
-    .product:hover img {
-        transform: scale(1.05);
-    }
-    
-    .product:hover .info {
-        transform: translateY(0);
-    }
-}
-
-/* Pour mobile - classe ajoutée par JavaScript */
-.product.show-info .info {
-    transform: translateY(0);
-}
-
-.product.show-info img {
-    transform: scale(1.05);
-}
-
-/* Style pour le bouton commander */
-.command-btn {
-    background: #ff6600;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 5px;
-    transition: background 0.3s ease;
-}
-
-.command-btn:hover {
-    background: #e55a00;
-}
-
-/* Indication visuelle pour mobile */
-@media (max-width: 768px) {
-    .product::after {
-        content: "👆 Touchez pour voir le prix";
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: rgba(0,0,0,0.7);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 15px;
-        font-size: 12px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .product:not(.show-info)::after {
-        opacity: 1;
-    }
-}
-    </style>
+  
 </html>
